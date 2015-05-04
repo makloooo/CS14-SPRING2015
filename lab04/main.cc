@@ -21,11 +21,9 @@ int main(int argc, char *argv[]) {
     }
     
     cout << "Preorder: " << endl;
-    PrePrimes(2, 1, k);
-    PrePrimes(3, 1, k);
+    PrePrimes(k);
     cout << "Postorder: " << endl;
-    PostPrimes(2, 1, k);
-    PostPrimes(3, 1, k);
+    PostPrimes(k);
     cout << "Sorted: " << endl;
     SortedPrimes(k);
     return 0;

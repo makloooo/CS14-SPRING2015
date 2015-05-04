@@ -4,23 +4,35 @@
 
 using namespace std;
 
-void PrePrimes(int m, int n, int k) {
+void PrePrimesRec(int m, int n, int k) {
     if (m + n <= k) {
         cout << m << ' ' << n << endl;
-        PrePrimes(2*m - n, m, k);
-        PrePrimes(2*m + n, m, k);
-        PrePrimes(m + 2*n, n, k);
+        PrePrimesRec(2*m - n, m, k);
+        PrePrimesRec(2*m + n, m, k);
+        PrePrimesRec(m + 2*n, n, k);
     }
     return;
 }
 
-void PostPrimes(int m, int n, int k) {
+void PrePrimes(int k) {
+    PrePrimesRec(2, 1, k);
+    PrePrimesRec(3, 1, k);
+    return;
+}
+
+void PostPrimesRec(int m, int n, int k) {
     if (m + n <= k) {
-        PostPrimes(2*m - n, m, k);
-        PostPrimes(2*m + n, m, k);
-        PostPrimes(m + 2*n, n, k);
+        PostPrimesRec(2*m - n, m, k);
+        PostPrimesRec(2*m + n, m, k);
+        PostPrimesRec(m + 2*n, n, k);
         cout << m << ' ' << n << endl;
     }
+    return;
+}
+
+void PostPrimes(int k) {
+    PostPrimesRec(2, 1, k);
+    PostPrimesRec(3, 1, k);
     return;
 }
 
