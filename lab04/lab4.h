@@ -45,46 +45,74 @@ void dumpStack(priority_queue<pair<int, int>>& entryStack) {
     return;
 }
 
-void SortedPrimes(int k) {
-    static priority_queue<pair<int, int>> entryStack;
-    queue<pair<int,int>> currStack;
-    queue<pair<int,int>> tempQueue;
+void ScanSort(int m, int n, int k, priority_queue<pair<int, int>>& target) {
     pair<int, int> entry;
-    pair<int, int> entry2;
+    if (m + n <= k) {
+        if (m + n == k) {
+            entry = make_pair(m, n);
+            target.push(entry);
+        }
+        ScanSort(2*m - n, m, k, target);
+        ScanSort(2*m + n, m, k, target);
+        ScanSort(m + 2*n, n, k, target);
+    }
+    return;
+}
+
+void SortedPrimes(int k) {
+    typedef priority_queue<pair<int, int>> primeQueue;
+    static primeQueue entryStack;
+    pair<int, int> entry;
     
     entry = make_pair(2, 1);
     entryStack.push(entry);
-    currStack.push(entry);
     entry = make_pair(3, 1);
     entryStack.push(entry);
-    currStack.push(entry);
+    dumpStack(entryStack);
     
-    while(!entryStack.empty()) {
-        dumpStack(entryStack); // This empties the stack
-        while(!currStack.empty()) {
-            if (2 * get<0>(currStack.front()) - get<1>(currStack.front()) + get<0>(currStack.front()) <= k) {
-                entry = make_pair(2 * get<0>(currStack.front()) - get<1>(currStack.front()), get<0>(currStack.front())); // 2m + n, m
-                entryStack.push(entry);
-                tempQueue.push(entry);
-            }
-            if (2 * get<0>(currStack.front()) + get<1>(currStack.front()) + get<0>(currStack.front()) <= k) {
-                entry = make_pair(2 * get<0>(currStack.front()) + get<1>(currStack.front()), get<0>(currStack.front()));
-                entryStack.push(entry);
-                tempQueue.push(entry);
-            }
-            if (get<0>(currStack.front()) + 2 * get<1>(currStack.front()) + get<1>(currStack.front()) <= k) {
-                entry = make_pair(get<0>(currStack.front()) + 2 * get<1>(currStack.front()), get<1>(currStack.front()));
-                entryStack.push(entry);
-                tempQueue.push(entry);
-            }
-            currStack.pop();
-        }
-        
-        while(!tempQueue.empty()) {
-            currStack.push(tempQueue.front());
-            tempQueue.pop();
-        }
+    for (int i = 5; i <= k; ++i) {
+        ScanSort(2, 1, i, entryStack);
+        ScanSort(3, 1, i, entryStack);
+        dumpStack(entryStack);
     }
-    //store valid pairs for later?
+    
+    // All of this unneccessary breadth first traversal
+    // queue<pair<int,int>> currStack;
+    // queue<pair<int,int>> tempQueue;
+    // pair<int, int> entry2;
+    
+    // entry = make_pair(2, 1);
+    // entryStack.push(entry);
+    // currStack.push(entry);
+    // entry = make_pair(3, 1);
+    // entryStack.push(entry);
+    // currStack.push(entry);
+    
+    // while(!entryStack.empty()) {
+    //     dumpStack(entryStack); // This empties the stack
+    //     while(!currStack.empty()) {
+    //         if (2 * get<0>(currStack.front()) - get<1>(currStack.front()) + get<0>(currStack.front()) <= k) {
+    //             entry = make_pair(2 * get<0>(currStack.front()) - get<1>(currStack.front()), get<0>(currStack.front())); // 2m + n, m
+    //             entryStack.push(entry);
+    //             tempQueue.push(entry);
+    //         }
+    //         if (2 * get<0>(currStack.front()) + get<1>(currStack.front()) + get<0>(currStack.front()) <= k) {
+    //             entry = make_pair(2 * get<0>(currStack.front()) + get<1>(currStack.front()), get<0>(currStack.front()));
+    //             entryStack.push(entry);
+    //             tempQueue.push(entry);
+    //         }
+    //         if (get<0>(currStack.front()) + 2 * get<1>(currStack.front()) + get<1>(currStack.front()) <= k) {
+    //             entry = make_pair(get<0>(currStack.front()) + 2 * get<1>(currStack.front()), get<1>(currStack.front()));
+    //             entryStack.push(entry);
+    //             tempQueue.push(entry);
+    //         }
+    //         currStack.pop();
+    //     }
+        
+    //     while(!tempQueue.empty()) {
+    //         currStack.push(tempQueue.front());
+    //         tempQueue.pop();
+    //     }
+    // }
     return;
 }
