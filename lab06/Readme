@@ -1,0 +1,12 @@
+a.) The selection sort algorithm isn't a stable sort type of algorithm. Generally
+because the way the algortihm is designed, contents are switched around indiscriminately
+based on the single condition that the current iterator is less than the main iterator.
+Due to this, a value that is equal in value yet further in the list can be switched to
+become a value which is in a position before that value, and therefore when the
+selection sort plays out the rest normally, that value may end up before the original
+value.
+
+b.) A prime example of this would be in the example output such in the second test
+case with a list of pairs, specifically (5, 5) and (5, -5). Before the sort, (5, -5)
+is evidently after (5, 5), yet after the sort (5, -5) is before (5, 5). Therefore
+by contradiction, this certain selection sort is not a stable sort type algorithm.
