@@ -10,3 +10,5 @@ b.) A prime example of this would be in the example output such in the second te
 case with a list of pairs, specifically (5, 5) and (5, -5). Before the sort, (5, -5)
 is evidently after (5, 5), yet after the sort (5, -5) is before (5, 5). Therefore
 by contradiction, this certain selection sort is not a stable sort type algorithm.
+You could say that the coded part of the question is in main.cc, as part of my
+test harness.
