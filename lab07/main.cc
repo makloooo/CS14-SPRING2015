@@ -1,3 +1,12 @@
+// Name: Mark Lieu
+// Date: 5/18/15
+// SID: 861148602
+/* Approach: 
+    Create a class that contains run data. Fill it up during the main function
+    loop, then average each run. Dump the data into the readme file via
+    appending and start the loop again for the next value of 'n' */
+
+
 #include <iostream>
 #include <fstream>
 #include <set>
