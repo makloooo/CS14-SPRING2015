@@ -1,0 +1,13 @@
+    A self balancing tree of course is going to have a longer runtime than an unordered
+hash table because it has a built in sorting function. A hash table just inserts
+things on top of its heap. With that said you could say that the clear advantages
+of a hash table and a tree are that a tree has a longer runtime but sorts things 
+for you, which a hash table has a shorter runtime but it leaves everything unsorted.
+    If we were to get technical with this, the worst time complexity of a hash table
+is apparently O(n), whereas the worst time complexity of a self balancing tree
+is O(log(n)). Hash tables are generally popular because they can access a lot of
+things with an average O(1) complexity - keyword "Average". Basically every so often
+a hash table will take O(n) while a tree would take O(log(n)) on the same task.
+In short, if we were to prefer a more "stable" data structure, a self balancing tree
+would be the way to go. Otherwise, a hash table usually does everything at a constant
+runtime and would be a better choice.
