@@ -11,3 +11,11 @@ a hash table will take O(n) while a tree would take O(log(n)) on the same task.
 In short, if we were to prefer a more "stable" data structure, a self balancing tree
 would be the way to go. Otherwise, a hash table usually does everything at a constant
 runtime and would be a better choice.
+    If I were given a choice on what else to measure for these two structures, I'd
+be at a standstill to be honest. There isn't much other things to compare. The
+prime difference between the two is that one is sorted, and the other isn't. Every
+other function doesn't mutate the structure to the degree where reordering takes place.
+Generally we'd want to test functions that either find a certain element, or forces
+a set to rebalance itself. Maybe memory used is different considering that an
+unordered set is raw data and a set is ordered, and therefore can be compressed
+somehow?
