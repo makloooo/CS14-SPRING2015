@@ -61,9 +61,17 @@ int main() {
     set<string> tree;
     unordered_set<string> hash;
     vector<string> word_bank;
+    vector<string>::iterator it;
     fstream inFS;
     
+    clock_t runtime;
+    clock_t ticks;
+    float Ftime = 0.0;
+    
     runData r;
+    
+    inFS.open("output.txt", ios::out | ios::trunc);
+    inFS.close();
     
     inFS.open("words.txt"); // Reading in file to vector then shuffling it
     if (!inFS.is_open()) {
@@ -79,49 +87,54 @@ int main() {
     
     // int n = 0;
     // cout << "Enter your value of n: "; cin >> n;
-    clock_t runtime;
     for (int n = 5000; n <= 50000; n += 5000) {
         random_shuffle(word_bank.begin(), word_bank.end());
         for (int i = 0; i < 10; ++i) {
             tree.clear();
             hash.clear();
             
-            runtime = clock(); // Clocking tree insertion time
-            for (int i = 0; i < n; ++i) { // Insertion time
-                tree.insert(word_bank.at(i));
+            /*----------Clocking Tree insertion time----------*/
+            runtime = clock();
+            for (int i = 0; i < n; ++i) {
+                tree.insert(word_bank.at(i)); // Using *it to avoid lookup in vector time.
             }
-            clock_t treeClicks = clock() - runtime;
-            r.treeIns.push_back((static_cast<float>(treeClicks) / CLOCKS_PER_SEC)*1000);
+            ticks = clock() - runtime;
+            r.treeIns.push_back((static_cast<float>(ticks) / CLOCKS_PER_SEC)*1000);
+            /*----------Clocking Tree insertion time----------*/
             
-            float Ftime = 0.0; // Clocking tree find time
+            /*----------Clocking tree find time----------*/
+            Ftime = 0.0;
+            ticks = 0;
             for (int i = 0; i < n; ++i) { 
                 runtime = clock();
                 tree.find(word_bank.at(i));
-                treeClicks = clock() - runtime;
-                Ftime += (static_cast<float>(treeClicks)/CLOCKS_PER_SEC)*1000;
+                ticks += clock() - runtime;
             }
-            //cout << "DEBUG - Tree Ftime: " << Ftime << endl;
+            Ftime = (static_cast<float>(ticks)/CLOCKS_PER_SEC)*1000;
             r.treeFind.push_back(Ftime / n);
+            /*----------Clocking tree find time----------*/
             
+            /*----------Clocking Hash insertion time----------*/
+            ticks = 0;
             runtime = clock();
             for (int i = 0; i < n; ++i) {
                 hash.insert(word_bank.at(i));
             }
-            clock_t hashClicks = clock() - runtime;
-            r.hashIns.push_back((static_cast<float>(hashClicks) / CLOCKS_PER_SEC)*1000);
+            ticks += clock() - runtime;
+            r.hashIns.push_back((static_cast<float>(ticks) / CLOCKS_PER_SEC)*1000);
+            /*----------Clocking Hash insertion time----------*/
             
+            /*----------Clocking Hash Find Time----------*/
             Ftime = 0.0;
+            ticks = 0;
             for (int i = 0; i < n; ++i) { 
                 runtime = clock();
                 hash.find(word_bank.at(i));
-                hashClicks = clock() - runtime;
-                Ftime += (static_cast<float>(hashClicks) / CLOCKS_PER_SEC)*1000;
+                ticks += clock() - runtime;
             }
-            // cout << "Hash Ftime: " << Ftime << endl;
+            Ftime = (static_cast<float>(ticks) / CLOCKS_PER_SEC)*1000;
             r.hashFind.push_back(Ftime / n);
-            // char cont;
-            // cout << "Continue (y/n)? "; cin >> cont;
-            // if (cont != 'y') exit(0);
+            /*----------Clocking Hash Find Time----------*/
         }
         r.dumpData("output.txt", n);
     }
